@@ -37,3 +37,4 @@
 [submodule "com.aware.plugin.mwt"]
 	path = com.aware.plugin.mwt
 	url = https://github.com/janakanuwan/aware-plugin-mwt.git
+	branch = feature/aware_phone
