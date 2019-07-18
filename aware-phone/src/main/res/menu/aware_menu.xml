@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/aware_assignment_create"
+        android:icon="@drawable/ic_action_assignment_black"
+        android:title="Create"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/aware_study_info"
         android:icon="@drawable/ic_action_aware_studies"
         android:title="Study"
