@@ -121,8 +121,9 @@ public abstract class Aware_Activity extends AppCompatPreferenceActivity {
         // Manual trigger ESM
         if (item.getTitle().toString().equalsIgnoreCase("Create")) {
             Log.d(Aware.TAG, "[ESM TRIGGER] Create");
-            Intent createEsm = new Intent("ACTION_AWARE_MWT_TRIGGER");
-            sendBroadcast(createEsm);
+            Intent triggerManualEsm = new Intent("ACTION_AWARE_MWT_TRIGGER");
+            triggerManualEsm.putExtra("ACTION_AWARE_MWT_TRIGGER_CAUSE", "TRIGGER_MANUAL");
+            sendBroadcast(triggerManualEsm);
         }
 
         return super.onOptionsItemSelected(item);
