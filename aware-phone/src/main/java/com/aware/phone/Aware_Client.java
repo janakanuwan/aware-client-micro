@@ -30,10 +30,12 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.PermissionChecker;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.Toast;
@@ -123,7 +125,8 @@ public class Aware_Client extends Aware_Activity implements SharedPreferences.On
         REQUIRED_PERMISSIONS.add(Manifest.permission.READ_SYNC_STATS);
         REQUIRED_PERMISSIONS.add(Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) REQUIRED_PERMISSIONS.add(Manifest.permission.FOREGROUND_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+            REQUIRED_PERMISSIONS.add(Manifest.permission.FOREGROUND_SERVICE);
 
         boolean PERMISSIONS_OK = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -150,6 +153,21 @@ public class Aware_Client extends Aware_Activity implements SharedPreferences.On
             whitelisting.setData(Uri.parse("package:" + getPackageName()));
             startActivity(whitelisting);
         }
+
+        setFloatingManualTrigger();
+    }
+
+    private void setFloatingManualTrigger() {
+        FloatingActionButton btnFloatingTrigger = (FloatingActionButton) findViewById(R.id.btnFloatingTrigger);
+        btnFloatingTrigger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(Aware.TAG, "[ESM TRIGGER] Create:Float");
+                Intent triggerManualEsm = new Intent("ACTION_AWARE_MWT_TRIGGER");
+                triggerManualEsm.putExtra("ACTION_AWARE_MWT_TRIGGER_CAUSE", "TRIGGER_MANUAL");
+                sendBroadcast(triggerManualEsm);
+            }
+        });
     }
 
     @Override
@@ -383,7 +401,7 @@ public class Aware_Client extends Aware_Activity implements SharedPreferences.On
             //Aware.isBatteryOptimizationIgnored(this, getPackageName());
 
             prefs.registerOnSharedPreferenceChangeListener(this);
-            
+
             new SettingsSync().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, //use all cores available to process UI faster
                     findPreference(Aware_Preferences.DEVICE_ID),
                     findPreference(Aware_Preferences.DEVICE_LABEL),
