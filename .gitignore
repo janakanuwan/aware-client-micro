@@ -2,4 +2,5 @@
 local.properties
 .idea
 /build
+aware-phone/release/*
 *.iml
